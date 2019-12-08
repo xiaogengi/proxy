@@ -1,23 +1,25 @@
 package com.xg.patternproxy.proxy.datasourcedynamicproxy;
 
 import com.xg.patternproxy.proxy.datasourcedynamicproxy.db.DynamicDataSource;
+import com.xg.patternproxy.proxy.datasourcedynamicproxy.handwriting.XgClassLoader;
+import com.xg.patternproxy.proxy.datasourcedynamicproxy.handwriting.XgInvocationHandler;
+import com.xg.patternproxy.proxy.datasourcedynamicproxy.handwriting.XgProxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class OrderServiceDynamicProxy implements InvocationHandler {
+public class OrderServiceDynamicProxy implements XgInvocationHandler {
     
     private SimpleDateFormat sim = new SimpleDateFormat("yyyy");
     
     private Object targer;
     
-    public Object OrderServiceDynamicProxy(Object targer){
+    public Object InfoDynamicProxy(Object targer){
         this.targer = targer;
         Class<?> clazz = targer.getClass();
-        return Proxy.newProxyInstance(clazz.getClassLoader(),clazz.getInterfaces(),this);
+        return XgProxy.newProxyInstance(new XgClassLoader(),clazz.getInterfaces(),this);
     }
     
     
